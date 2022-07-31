@@ -27,8 +27,7 @@ class Imdb:
         '''
 
         movies: list[dict] = []
-        url = '{0}/SearchMovie/{1}/{2}'.format(
-            self.base_url, self.api_key, name)
+        url = f'{self.base_url}/SearchMovie/{self.api_key}/{name}'
 
         response = requests.get(url)
 
@@ -62,8 +61,7 @@ class Imdb:
             plot, directors, stars, content_rating, imdb_rating, imdb_votes, metacritic_rating.
         '''
 
-        url = '{0}/Title/{1}/{2}'.format(
-            self.base_url, self.api_key, title_id)
+        url = f'{self.base_url}/Title/{self.api_key}/{title_id}'
 
         response = requests.get(url)
 
