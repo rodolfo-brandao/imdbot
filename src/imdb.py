@@ -3,21 +3,23 @@ import requests
 
 class Imdb:
     '''
-    A wrapper class for the IMDb API.
+    A wrapper class for the IMDb API, avaliable at: https://imdb-api.com/
     '''
 
     def __init__(self, api_key: str) -> None:
         self.api_key = api_key
         self.base_url = 'https://imdb-api.com/en/API'
 
-    def search_movies(self, name: str) -> list[dict]:
+    def search(self, name: str, search_type: str = 'movie') -> list[dict]:
         '''
-        Searches for movies whose title matches the specified name.
+        Searches for occurences of movies or series whose title matches the specified name.
 
         Parameters
         ----------
         name : str
             The name to search.
+        search_type: str
+            The type of the search. It can be "movie" or "series".
 
         Returns
         -------
@@ -26,23 +28,24 @@ class Imdb:
             id, title, description, image_url.
         '''
 
-        movies: list[dict] = []
-        url = f'{self.base_url}/SearchMovie/{self.api_key}/{name}'
+        occurences: list[dict] = []
+        endpoint = 'SearchSeries' if search_type == 'series' else 'SearchMovie'
+        url = f'{self.base_url}/{endpoint}/{self.api_key}/{name}'
 
         response = requests.get(url)
 
         if response.status_code == 200:
             response_obj = response.json()
 
-            for movie in response_obj:
-                movies.append({
-                    'id': movie['id'],
-                    'title': movie['title'],
-                    'description': movie['description'],
-                    'image_url': movie['image']
+            for occurence in response_obj['results']:
+                occurences.append({
+                    'id': occurence['id'],
+                    'title': occurence['title'],
+                    'description': occurence['description'],
+                    'image_url': occurence['image']
                 })
 
-        return movies
+        return occurences
 
     def search_title(self, title_id: str) -> dict:
         '''
