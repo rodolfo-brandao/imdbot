@@ -3,14 +3,14 @@ import requests
 
 class Imdb:
     '''
-    A wrapper class for the IMDb API, avaliable at: https://imdb-api.com/
+    A wrapper class for the IMDb API.
     '''
 
     def __init__(self, api_key: str) -> None:
         self.api_key = api_key
         self.base_url = 'https://imdb-api.com/en/API'
 
-    def search(self, name: str, search_type: str = 'movie') -> list[dict]:
+    def search(cls, name: str, search_type: str = 'movie') -> list[dict]:
         '''
         Searches for occurences of movies or series whose title matches the specified name.
 
@@ -18,7 +18,7 @@ class Imdb:
         ----------
         name : str
             The name to search.
-        search_type: str
+        search_type: str (default: "movie")
             The type of the search. It can be "movie" or "series".
 
         Returns
@@ -30,7 +30,7 @@ class Imdb:
 
         occurences: list[dict] = []
         endpoint = 'SearchSeries' if search_type == 'series' else 'SearchMovie'
-        url = f'{self.base_url}/{endpoint}/{self.api_key}/{name}'
+        url = f'{cls.base_url}/{endpoint}/{cls.api_key}/{name}'
 
         response = requests.get(url)
 
@@ -47,7 +47,7 @@ class Imdb:
 
         return occurences
 
-    def search_title(self, title_id: str) -> dict:
+    def search_title(cls, title_id: str) -> dict:
         '''
         Searchs for the title specified by the id.
 
@@ -64,7 +64,7 @@ class Imdb:
             plot, directors, stars, content_rating, imdb_rating, imdb_votes, metacritic_rating.
         '''
 
-        url = f'{self.base_url}/Title/{self.api_key}/{title_id}'
+        url = f'{cls.base_url}/Title/{cls.api_key}/{title_id}'
 
         response = requests.get(url)
 
