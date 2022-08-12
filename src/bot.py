@@ -76,7 +76,7 @@ async def series(ctx, *args):
 async def details(ctx, arg):
     """Gets all movie/series details provided by the IMDb-API."""
 
-    response = imdb.search_title(arg)
+    response = imdb.details(arg)
 
     title = f'Title: `{response["title"]}`'
     year = f'Year: `{response["year"]}`'
