@@ -9,7 +9,8 @@ class Imdb:
         self.base_url = 'https://imdb-api.com/en/API'
 
     def search(self, name: str, search_type: str = 'movie') -> list[dict]:
-        """Searches for occurences of movies or series whose title/description matches the specified name.
+        """Searches for occurences of movies or series
+        whose title/description matches the specified name.
 
         Parameters
         ----------
@@ -42,12 +43,12 @@ class Imdb:
 
         return occurences
 
-    def details(self, id: str) -> dict:
+    def details(self, title_id: str) -> dict:
         """Searches for details of the title specified by its id.
 
         Parameters
         ----------
-        id : str
+        title_id : str
             The id of the title to search.
 
         Returns
@@ -57,7 +58,7 @@ class Imdb:
             title, genres, languages, type (movie or series), year, image_url, runtime,
             plot, directors, stars, content_rating, imdb_rating, imdb_votes, metacritic_rating."""
 
-        url = f'{self.base_url}/Title/{self.api_key}/{id}'
+        url = f'{self.base_url}/Title/{self.api_key}/{title_id}'
         response = requests.get(url)
         details: dict = {}
 
